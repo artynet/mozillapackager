@@ -1,0 +1,1 @@
+wget -c --tries=20 --read-timeout=60 --waitretry=10 -q -nv -O - https://www.mozilla.org/it/firefox/new/?scene=2 | grep 'softwareVersion' -m 1
