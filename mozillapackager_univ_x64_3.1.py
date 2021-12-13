@@ -75,7 +75,7 @@ class VersionInfo:
     '''
     def __init__(self):
         self.name = "ubuntuzilla"
-        self.version = "3.0"
+        self.version = "3.1"
         self.description = "Packager of Mozilla Builds of Mozilla Software for Ubuntu"
         self.url = "http://ubuntuzilla.sourceforge.net/"
         self.license = "GPL"
