@@ -107,9 +107,9 @@ class UtilityFunctions:
         returncode = p.wait()
         result = p.stdout.readlines()
         
-        # need this separate check for w3m, since its return code is 0 even if it fails to find the site.
-        if re.match("w3m", executionstring):
-            if len(result) == 0 or re.match("w3m: Can't load", result[0]):
+        # need this separate check for wget, since its return code is 0 even if it fails to find the site.
+        if re.match("wget", executionstring):
+            if len(result) == 0 or re.match("wget: Can't load", result[0]):
                 errormessage = '\n'.join(result) + errormessage
                 returncode = 1
         
@@ -347,7 +347,7 @@ class MozillaInstaller:
         print "Retrieving package name for", self.options.package.capitalize(), "..."
         for mirror in self.options.mirrors:
             try:
-                self.packageFilename = self.util.getSystemOutput(executionstring="w3m -dump http://" + mirror + self.options.package + "/releases/" + self.releaseVersion + "/linux-x86_64/"+self.options.localization+"/ | grep '" + self.options.package + "' | grep -v '\.asc' |grep -v 'http://' | awk '{ print substr($0,index($0, \"" + self.options.package + "\"))}' | awk '{print $1}' | sed -e 's/\.*$//' | tail -n1", numlines=1)
+                self.packageFilename = self.util.getSystemOutput(executionstring="wget -qO- http://" + mirror + self.options.package + "/releases/" + self.releaseVersion + "/linux-x86_64/"+self.options.localization+"/ | grep '" + self.options.package + "' | grep -v '\.asc' |grep -v 'http://' | awk '{ print substr($0,index($0, \"" + self.options.package + "\"))}' | awk '{print $1}' | sed -e 's/\.*$//' | tail -n1 | sed -e 's/<.*$//' | sed -e 's/.*>//'", numlines=1)
                 print "Success!: " + self.packageFilename
                 break
             except SystemCommandExecutionError:
